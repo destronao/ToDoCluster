@@ -4,5 +4,6 @@ public enum TaskState {
 	BACKLOG,
 	ACTIVE,
 	DONE,
-	CANCELED
+	CANCELED,
+	ARCHIVED
 }
