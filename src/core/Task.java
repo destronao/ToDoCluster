@@ -136,6 +136,21 @@ public class Task {
 		state = TaskState.CANCELED;
 		return true;
 	}
+	
+	public boolean archive() {
+		if (state == TaskState.ARCHIVED) {
+			System.out.println("La tarea ya está archivada.");
+			return false;
+		}
+		if (state == TaskState.BACKLOG || state == TaskState.ACTIVE) {
+			System.out.println("No se puede archivar una tarea que no está completada o cancelada.");
+			return false;
+		}
+
+		System.out.println("Tarea archivada");
+		state = TaskState.ARCHIVED;
+		return true;
+	}
 
 	@Override
 	public String toString() {
@@ -167,7 +182,10 @@ public class Task {
 		if (state == TaskState.DONE) {
 			return "Completada";
 		}
-		return "Cancelada";
+		if (state == TaskState.CANCELED) {
+			return "Cancelada";
+		}
+		return "Archivada";
 	}
 	
 }
