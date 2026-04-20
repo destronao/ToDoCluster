@@ -100,6 +100,10 @@ public class Task {
 		return state;
 	}
 	
+	public void setState(TaskState state) {
+		this.state = state;
+	}
+	
 	public boolean start() {
 		if (state != TaskState.BACKLOG) {
 			System.out.println("La tarea ya esta iniciada.");

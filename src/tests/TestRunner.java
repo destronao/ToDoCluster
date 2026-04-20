@@ -13,6 +13,10 @@ public class TestRunner {
         InMemoryTaskRepositoryTest.main(args);
         System.out.println();
 
+        System.out.println("--- TaskServiceTest ---");
+        TaskServiceTest.main(args);
+        System.out.println();
+
         System.out.println("=== Suite de tests completada ===");
     }
 }
