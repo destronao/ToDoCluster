@@ -10,76 +10,72 @@ import java.util.List;
 
 public class InMemoryTaskRepositoryTest {
 
+    private static int passed = 0;
+    private static int failed = 0;
+
     public static void main(String[] args) {
+        Task.resetCounter();
+        
         TaskRepository repository = new InMemoryTaskRepository();
 
         System.out.println("=== Pruebas de InMemoryTaskRepository ===\n");
 
-        // Crear tareas
         Task task1 = new Task("Tarea 1", "Descripción 1", TaskPriority.HIGH);
         Task task2 = new Task("Tarea 2", TaskPriority.MEDIUM);
         Task task3 = new Task("Tarea 3", "Descripción 3", TaskPriority.LOW);
 
-        System.out.println("1. Guardando tareas...");
         repository.save(task1);
         repository.save(task2);
         repository.save(task3);
-        System.out.println("Tareas guardadas.\n");
 
-        // Listar todas
-        System.out.println("2. Listando todas las tareas:");
-        List<Task> allTasks = repository.findAll();
-        allTasks.forEach(System.out::println);
-        System.out.println();
+        assertEquals(3, repository.findAll().size(), "Debe haber 3 tareas después de guardar");
 
-        // Buscar por ID
-        System.out.println("3. Buscando tarea por ID 'T0001':");
-        repository.findById("T0001").ifPresentOrElse(
-            task -> System.out.println("Encontrada: " + task),
-            () -> System.out.println("No encontrada")
-        );
-        System.out.println("Buscando tarea por ID 'T9999':");
-        repository.findById("T9999").ifPresentOrElse(
-            task -> System.out.println("Encontrada: " + task),
-            () -> System.out.println("No encontrada")
-        );
-        System.out.println();
+        assertTrue(repository.findById("T0001").isPresent(), "T0001 debe encontrarse");
+        assertTrue(repository.findById("T9999").isEmpty(), "T9999 no debe encontrarse");
 
-        // Filtrar por prioridad
-        System.out.println("4. Filtrando por prioridad HIGH:");
         List<Task> highPriority = repository.findByPriority(TaskPriority.HIGH);
-        highPriority.forEach(System.out::println);
-        System.out.println();
+        assertEquals(1, highPriority.size(), "Debe haber 1 tarea con prioridad HIGH");
 
-        // Filtrar por estado
-        System.out.println("5. Filtrando por estado BACKLOG:");
         List<Task> backlogTasks = repository.findByState(TaskState.BACKLOG);
-        backlogTasks.forEach(System.out::println);
-        System.out.println();
+        assertEquals(3, backlogTasks.size(), "Todas las tareas iniciales deben estar en BACKLOG");
 
-        // Completar y archivar una tarea
-        System.out.println("6. Completando y archivando tarea 'T0001':");
-        task1.complete(); // Cambiar estado a DONE
-        repository.save(task1); // Actualizar en repositorio
+        task1.start();
+        task1.complete();
+        repository.save(task1);
         boolean archived = repository.archive("T0001");
-        System.out.println("Archivada: " + archived);
-        System.out.println("Estado actual de T0001:");
-        repository.findById("T0001").ifPresent(System.out::println);
-        System.out.println();
+        assertTrue(archived, "T0001 debe archivarse después de completar");
 
-        // Intentar archivar una tarea en BACKLOG
-        System.out.println("7. Intentando archivar tarea en BACKLOG 'T0002':");
+        repository.findById("T0001").ifPresent(task ->
+            assertEquals(TaskState.ARCHIVED, task.getState(), "T0001 debe estar en estado ARCHIVED después de archivar")
+        );
+
         boolean archived2 = repository.archive("T0002");
-        System.out.println("Archivada: " + archived2);
-        System.out.println();
+        assertTrue(!archived2, "T0002 no debe archivarse desde BACKLOG");
 
-        // Listar todas después de cambios
-        System.out.println("8. Listando todas las tareas después de cambios:");
-        allTasks = repository.findAll();
-        allTasks.forEach(System.out::println);
-        System.out.println();
+        assertEquals(3, repository.findAll().size(), "El número total de tareas no debe cambiar después de archivar");
 
-        System.out.println("=== Pruebas completadas ===");
+        System.out.println();
+        System.out.println("=== Resultados de InMemoryTaskRepositoryTest ===");
+        System.out.println("OK: " + passed + "  Fail: " + failed);
     }
-}</content>
-<parameter name="filePath">f:\GithubProjects\MyTasks-1\src\tests\InMemoryTaskRepositoryTest.java
+
+    private static void assertTrue(boolean condition, String message) {
+        if (condition) {
+            passed++;
+            System.out.println("OK: " + message);
+        } else {
+            failed++;
+            System.out.println("Fail: " + message);
+        }
+    }
+
+    private static void assertEquals(Object expected, Object actual, String message) {
+        if (expected == null ? actual == null : expected.equals(actual)) {
+            passed++;
+            System.out.println("OK: " + message);
+        } else {
+            failed++;
+            System.out.println("Fail: " + message + " (esperado=" + expected + ", actual=" + actual + ")");
+        }
+    }
+}

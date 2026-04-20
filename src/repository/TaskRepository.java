@@ -1,5 +1,8 @@
 package repository;
 
+import core.Task;
+import core.TaskPriority;
+import core.TaskState;
 import java.util.List;
 import java.util.Optional;
 

@@ -64,6 +64,10 @@ public class Task {
 		return String.format("T%04d", counter++);
 	}
 
+	public static void resetCounter() {
+		counter = 1;
+	}
+
 	public String getTitle() {
 		return title;
 	}
