@@ -11,19 +11,31 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Command Line Interface for the Task Management System.
- * Provides a menu-driven interface for users to manage tasks.
+ * Interfaz de Línea de Comandos para el Sistema de Gestión de Tareas.
+ * Proporciona una interfaz basada en menú para que los usuarios gestionen tareas.
+ * 
+ * @author Equipo de desarrollo
+ * @version 1.0
  */
 public class TaskCLI {
 
     private final TaskService taskService;
     private final Scanner scanner;
 
+    /**
+     * Constructor que inicializa la CLI con el servicio de tareas.
+     * 
+     * @param taskService el servicio de tareas para gestionar la lógica de negocio
+     */
     public TaskCLI(TaskService taskService) {
         this.taskService = taskService;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Ejecuta el bucle principal de la interfaz de usuario.
+     * Muestra el menú y procesa las opciones del usuario hasta que elige salir.
+     */
     public void run() {
         System.out.println("=== Sistema de Gestión de Tareas ===");
         System.out.println("Bienvenido al CLI de gestión de tareas.\n");
@@ -220,6 +232,12 @@ public class TaskCLI {
         }
     }
 
+    /**
+     * Método principal que inicia la aplicación CLI.
+     * Inicializa las dependencias y ejecuta la interfaz de usuario.
+     * 
+     * @param args argumentos de línea de comandos (no utilizados)
+     */
     public static void main(String[] args) {
         // Initialize dependencies
         TaskRepository repository = new InMemoryTaskRepository();

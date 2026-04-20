@@ -9,27 +9,32 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Service class for managing task business logic.
- * Acts as an intermediary between the repository and the presentation layer (CLI).
- * Encapsulates all task-related operations and business rules.
+ * Clase de servicio para gestionar la lógica de negocio de tareas.
+ * Actúa como intermediario entre el repositorio y la capa de presentación (CLI).
+ * Encapsula todas las operaciones relacionadas con tareas y reglas de negocio.
+ * 
+ * @author Equipo de desarrollo
+ * @version 1.0
  */
 public class TaskService {
 
     private final TaskRepository taskRepository;
 
     /**
-     * Constructor that injects the TaskRepository dependency.
-     * @param taskRepository the repository to use for data access
+     * Constructor que inyecta la dependencia TaskRepository.
+     * 
+     * @param taskRepository el repositorio a usar para el acceso a datos
      */
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
     /**
-     * Creates a new task with the given details.
-     * @param title the title of the task
-     * @param description the description of the task
-     * @param priority the priority of the task
+     * Crea una nueva tarea con los detalles proporcionados.
+     * 
+     * @param title el título de la tarea
+     * @param description la descripción de la tarea
+     * @param priority la prioridad de la tarea
      */
     public void createTask(String title, String description, TaskPriority priority) {
         Task newTask = new Task(title, description, priority);
@@ -37,18 +42,20 @@ public class TaskService {
     }
 
     /**
-     * Retrieves all tasks.
-     * @return a list of all tasks
+     * Recupera todas las tareas.
+     * 
+     * @return una lista de todas las tareas
      */
     public List<Task> listTasks() {
         return taskRepository.findAll();
     }
 
     /**
-     * Updates the state of a task identified by its ID.
-     * @param id the task ID
-     * @param newState the new state to set
-     * @return true if the task was found and updated, false otherwise
+     * Actualiza el estado de una tarea identificada por su ID.
+     * 
+     * @param id el ID de la tarea
+     * @param newState el nuevo estado a establecer
+     * @return true si la tarea fue encontrada y actualizada, false en caso contrario
      */
     public boolean updateState(String id, TaskState newState) {
         Optional<Task> taskOpt = taskRepository.findById(id);
@@ -65,10 +72,11 @@ public class TaskService {
     }
 
     /**
-     * Updates the priority of a task identified by its ID.
-     * @param id the task ID
-     * @param newPriority the new priority to set
-     * @return true if the task was found and updated, false otherwise
+     * Actualiza la prioridad de una tarea identificada por su ID.
+     * 
+     * @param id el ID de la tarea
+     * @param newPriority la nueva prioridad a establecer
+     * @return true si la tarea fue encontrada y actualizada, false en caso contrario
      */
     public boolean updatePriority(String id, TaskPriority newPriority) {
         Optional<Task> taskOpt = taskRepository.findById(id);
@@ -85,27 +93,30 @@ public class TaskService {
     }
 
     /**
-     * Filters tasks by state.
-     * @param state the state to filter by
-     * @return a list of tasks with the specified state
+     * Filtra tareas por estado.
+     * 
+     * @param state el estado para filtrar
+     * @return una lista de tareas con el estado especificado
      */
     public List<Task> filterByState(TaskState state) {
         return taskRepository.findByState(state);
     }
 
     /**
-     * Filters tasks by priority.
-     * @param priority the priority to filter by
-     * @return a list of tasks with the specified priority
+     * Filtra tareas por prioridad.
+     * 
+     * @param priority la prioridad para filtrar
+     * @return una lista de tareas con la prioridad especificada
      */
     public List<Task> filterByPriority(TaskPriority priority) {
         return taskRepository.findByPriority(priority);
     }
 
     /**
-     * Archives a task identified by its ID.
-     * @param id the task ID
-     * @return true if the task was archived, false otherwise
+     * Archiva una tarea identificada por su ID.
+     * 
+     * @param id el ID de la tarea
+     * @return true si la tarea fue archivada, false en caso contrario
      */
     public boolean archiveTask(String id) {
         return taskRepository.archive(id);

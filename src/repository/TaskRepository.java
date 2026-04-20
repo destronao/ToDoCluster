@@ -7,49 +7,58 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Contract for task data access and storage.
- * This interface defines the basic operations needed to manage tasks,
- * allowing for different implementations (in-memory, database, etc.).
+ * Interfaz para el acceso y almacenamiento de datos de tareas.
+ * Define las operaciones básicas necesarias para gestionar tareas,
+ * permitiendo diferentes implementaciones (en memoria, base de datos, etc.).
+ * 
+ * @author Equipo de desarrollo
+ * @version 1.0
  */
 public interface TaskRepository {
 
     /**
-     * Saves a task. If the task is new, it creates it; if it exists, updates it.
-     * @param task the task to save
+     * Guarda una tarea. Si la tarea es nueva, la crea; si existe, la actualiza.
+     * 
+     * @param task la tarea a guardar
      */
     void save(Task task);
 
     /**
-     * Retrieves all tasks.
-     * @return a list of all tasks
+     * Recupera todas las tareas.
+     * 
+     * @return una lista de todas las tareas
      */
     List<Task> findAll();
 
     /**
-     * Finds a task by its ID.
-     * @param id the task ID
-     * @return an Optional containing the task if found, or empty if not
+     * Busca una tarea por su ID.
+     * 
+     * @param id el ID de la tarea
+     * @return un Optional que contiene la tarea si se encuentra, o vacío si no
      */
     Optional<Task> findById(String id);
 
     /**
-     * Finds tasks by priority.
-     * @param priority the priority to filter by
-     * @return a list of tasks with the specified priority
+     * Busca tareas por prioridad.
+     * 
+     * @param priority la prioridad para filtrar
+     * @return una lista de tareas con la prioridad especificada
      */
     List<Task> findByPriority(TaskPriority priority);
 
     /**
-     * Finds tasks by state.
-     * @param state the state to filter by
-     * @return a list of tasks with the specified state
+     * Busca tareas por estado.
+     * 
+     * @param state el estado para filtrar
+     * @return una lista de tareas con el estado especificado
      */
     List<Task> findByState(TaskState state);
 
     /**
-     * Archives a task by its ID. This typically changes the task's state to ARCHIVED.
-     * @param id the task ID
-     * @return true if the task was archived, false if not found or already archived
+     * Archiva una tarea por su ID. Esto típicamente cambia el estado de la tarea a ARCHIVED.
+     * 
+     * @param id el ID de la tarea
+     * @return true si la tarea fue archivada, false si no se encontró o ya estaba archivada
      */
     boolean archive(String id);
 }
