@@ -1,4 +1,4 @@
-package repository.InMemory;
+package repository.inmemory;
 
 import core.Task;
 import core.TaskPriority;
