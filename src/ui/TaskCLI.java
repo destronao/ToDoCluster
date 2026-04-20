@@ -31,39 +31,44 @@ public class TaskCLI {
         boolean running = true;
         while (running) {
             showMenu();
-            int choice = getIntInput("Seleccione una opción: ");
-            System.out.println();
+            try {
+                int choice = getIntInput("Seleccione una opción: ");
+                System.out.println();
 
-            switch (choice) {
-                case 1:
-                    createTask();
-                    break;
-                case 2:
-                    listTasks();
-                    break;
-                case 3:
-                    updateTaskState();
-                    break;
-                case 4:
-                    updateTaskPriority();
-                    break;
-                case 5:
-                    filterByState();
-                    break;
-                case 6:
-                    filterByPriority();
-                    break;
-                case 7:
-                    archiveTask();
-                    break;
-                case 8:
-                    running = false;
-                    System.out.println("¡Hasta luego!");
-                    break;
-                default:
-                    System.out.println("Opción inválida. Intente de nuevo.");
+                switch (choice) {
+                    case 1:
+                        createTask();
+                        break;
+                    case 2:
+                        listTasks();
+                        break;
+                    case 3:
+                        updateTaskState();
+                        break;
+                    case 4:
+                        updateTaskPriority();
+                        break;
+                    case 5:
+                        filterByState();
+                        break;
+                    case 6:
+                        filterByPriority();
+                        break;
+                    case 7:
+                        archiveTask();
+                        break;
+                    case 8:
+                        running = false;
+                        System.out.println("¡Hasta luego!");
+                        break;
+                    default:
+                        System.out.println("Opción inválida. Intente de nuevo.");
+                }
+                System.out.println();
+            } catch (Exception e) {
+                System.out.println("No hay más entrada. Saliendo...");
+                running = false;
             }
-            System.out.println();
         }
     }
 
@@ -182,6 +187,9 @@ public class TaskCLI {
         while (true) {
             try {
                 System.out.print(prompt);
+                if (!scanner.hasNextLine()) {
+                    throw new RuntimeException("No input available");
+                }
                 int value = Integer.parseInt(scanner.nextLine().trim());
                 return value;
             } catch (NumberFormatException e) {
