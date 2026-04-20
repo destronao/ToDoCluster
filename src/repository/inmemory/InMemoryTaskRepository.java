@@ -1,4 +1,4 @@
-package repository.InMemory;
+package repository.inmemory;
 
 import core.Task;
 import core.TaskPriority;
@@ -10,14 +10,27 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * In-memory implementation of TaskRepository.
- * Stores tasks in a list for simplicity and testing purposes.
- * Not suitable for production as data is lost on application restart.
+ * Implementación en memoria de TaskRepository.
+ * Almacena tareas en una lista para simplicidad y propósitos de prueba.
+ * No es adecuada para producción ya que los datos se pierden al reiniciar la aplicación.
+ * 
+ * @author Equipo de desarrollo
+ * @version 1.0
  */
 public class InMemoryTaskRepository implements TaskRepository {
 
     private final List<Task> tasks = new ArrayList<>();
 
+    /**
+     * Constructor por defecto.
+     */
+    public InMemoryTaskRepository() {
+        // Constructor vacío
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save(Task task) {
         // Check if task already exists by ID
@@ -32,11 +45,17 @@ public class InMemoryTaskRepository implements TaskRepository {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Task> findAll() {
         return new ArrayList<>(tasks); // Return a copy to prevent external modification
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Task> findById(String id) {
         return tasks.stream()
@@ -44,6 +63,9 @@ public class InMemoryTaskRepository implements TaskRepository {
                 .findFirst();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Task> findByPriority(TaskPriority priority) {
         return tasks.stream()
@@ -51,6 +73,9 @@ public class InMemoryTaskRepository implements TaskRepository {
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Task> findByState(TaskState state) {
         return tasks.stream()
@@ -58,6 +83,9 @@ public class InMemoryTaskRepository implements TaskRepository {
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean archive(String id) {
         Optional<Task> taskOpt = findById(id);

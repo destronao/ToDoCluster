@@ -3,7 +3,7 @@ package tests;
 import core.Task;
 import core.TaskPriority;
 import core.TaskState;
-import repository.InMemory.InMemoryTaskRepository;
+import repository.inmemory.InMemoryTaskRepository;
 import repository.TaskRepository;
 
 import java.util.List;

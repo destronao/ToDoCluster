@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"repository.inmemory","l":"InMemoryTaskRepository"},{"p":"core","l":"Task"},{"p":"ui","l":"TaskCLI"},{"p":"core","l":"TaskPriority","k":"9"},{"p":"repository","l":"TaskRepository","k":"10"},{"p":"services","l":"TaskService"},{"p":"core","l":"TaskState","k":"9"}];updateSearchResults();
